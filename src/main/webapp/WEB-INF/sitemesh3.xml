@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <!-- Bỏ bớt 1 chuỗi /WEB-INF/decorators/ bị lặp -->
+    <mapping path="/*" decorator="web.jsp" />
+
+    <mapping path="/login" exclude="true" />
+    <mapping path="/register" exclude="true" />
+</sitemesh>
