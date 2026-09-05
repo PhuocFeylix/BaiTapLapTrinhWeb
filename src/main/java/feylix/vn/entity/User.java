@@ -8,6 +8,16 @@ import java.io.Serializable;
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Column(name = "role")
+	private int role; // Quy ước: 1 = Admin, 0 = User thường (hoặc String role = "ADMIN")
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
