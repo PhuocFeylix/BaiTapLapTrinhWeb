@@ -19,6 +19,9 @@
 					<h4 class="mb-0">Cập nhật thông tin sản phẩm</h4>
 				</div>
 				<div class="card-body">
+					<c:if test="${not empty error}">
+						<div class="alert alert-danger">${error}</div>
+					</c:if>
 					<form
 						action="${pageContext.request.contextPath}/admin/product/update"
 						method="post" enctype="multipart/form-data">
@@ -37,14 +40,14 @@
 						<!-- Gia -->
 						<div class="mb-3">
 							<label for="price" class="form-label">Giá (VNĐ):</label> <input
-								type="number" step="0.01" class="form-control" id="price"
+								type="number" step="0.01" min="0" class="form-control" id="price"
 								name="price" value="${product.price}" required />
 						</div>
 
 						<!-- So luong -->
 						<div class="mb-3">
 							<label for="quantity" class="form-label">Số lượng:</label> <input
-								type="number" class="form-control" id="quantity" name="quantity"
+								type="number" min="0" class="form-control" id="quantity" name="quantity"
 								value="${product.quantity}" required />
 						</div>
 

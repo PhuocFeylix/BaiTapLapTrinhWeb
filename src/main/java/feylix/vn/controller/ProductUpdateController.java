@@ -52,6 +52,15 @@ public class ProductUpdateController extends HttpServlet {
 				return;
 			}
 
+			// ===== VALIDATION PHIA SERVER =====
+			if (productName == null || productName.trim().isEmpty() || price < 0 || quantity < 0) {
+				req.setAttribute("error", "Vui lòng nhập tên sản phẩm hợp lệ, giá và số lượng không được âm!");
+				req.setAttribute("product", product);
+				req.setAttribute("categories", categoryDao.findAll());
+				req.getRequestDispatcher("/views/admin/product-edit.jsp").forward(req, resp);
+				return;
+			}
+
 			Part part = req.getPart("imageFile");
 			String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
 

@@ -4,6 +4,10 @@
 
 <h2>Cập nhật danh mục</h2>
 
+<c:if test="${not empty error}">
+	<div class="alert alert-danger">${error}</div>
+</c:if>
+
 <form action="${pageContext.request.contextPath}/admin/category/update"
 	method="post" enctype="multipart/form-data">
 	<input type="hidden" name="categoryId" value="${cate.categoryId}" />

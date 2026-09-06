@@ -50,9 +50,23 @@ public class ProfileController extends HttpServlet {
 		String fullname = req.getParameter("fullname");
 		String phone = req.getParameter("phone");
 
-		// Xử lý upload ảnh
+		// ===== VALIDATION PHIA SERVER =====
+		if (fullname == null || fullname.trim().isEmpty()) {
+			req.setAttribute("error", "Vui lòng nhập họ và tên!");
+			req.getRequestDispatcher("/views/profile.jsp").forward(req, resp);
+			return;
+		}
+		if (phone != null && !phone.trim().isEmpty() && !phone.trim().matches("[0-9]{9,11}")) {
+			req.setAttribute("error", "Số điện thoại không hợp lệ (chỉ gồm 9-11 chữ số)!");
+			req.getRequestDispatcher("/views/profile.jsp").forward(req, resp);
+			return;
+		}
+
+		// Xử lý upload ảnh (co the khong chon anh moi)
 		Part filePart = req.getPart("image");
-		String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+		String fileName = (filePart != null && filePart.getSubmittedFileName() != null)
+				? Paths.get(filePart.getSubmittedFileName()).getFileName().toString()
+				: null;
 
 		if (fileName != null && !fileName.isEmpty()) {
 			String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";

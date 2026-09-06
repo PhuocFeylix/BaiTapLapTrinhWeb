@@ -49,8 +49,16 @@
 <div class="login-card">
     <h2 class="login-title">Đăng Nhập Vào Hệ Thống</h2>
 
-    <c:if test="${alert != null}">
-        <div class="alert alert-danger" style="padding: 8px; font-size: 13px;">${alert}</div>
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger" style="padding: 8px; font-size: 13px;">
+            ${error}
+            <c:if test="${not empty pendingUsername}">
+                <br/><a href="${pageContext.request.contextPath}/verify-otp?username=${pendingUsername}">Nhập mã OTP kích hoạt tài khoản</a>
+            </c:if>
+        </div>
+    </c:if>
+    <c:if test="${not empty success}">
+        <div class="alert alert-success" style="padding: 8px; font-size: 13px;">${success}</div>
     </c:if>
 
     <form action="login" method="post">
@@ -78,7 +86,7 @@
                 </label>
             </div>
             <div class="col-xs-6 text-right">
-                <a href="#" style="color: #666; text-decoration: underline;">Quên mật khẩu?</a>
+                <a href="${pageContext.request.contextPath}/forgot-password" style="color: #666; text-decoration: underline;">Quên mật khẩu?</a>
             </div>
         </div>
 

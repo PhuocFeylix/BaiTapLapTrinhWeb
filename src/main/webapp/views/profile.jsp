@@ -13,6 +13,9 @@
 			<c:if test="${not empty message}">
 				<div class="alert alert-success">${message}</div>
 			</c:if>
+			<c:if test="${not empty error}">
+				<div class="alert alert-danger">${error}</div>
+			</c:if>
 
 			<form action="${pageContext.request.contextPath}/user/profile"
 				method="post" enctype="multipart/form-data">
@@ -38,13 +41,14 @@
 
 				<div class="mb-3">
 					<label class="form-label">Họ và tên:</label> <input type="text"
-						name="fullname" class="form-control"
+						name="fullname" class="form-control" required
 						value="${sessionScope.account.fullname}">
 				</div>
 
 				<div class="mb-3">
 					<label class="form-label">Số điện thoại:</label> <input type="text"
-						name="phone" class="form-control"
+						name="phone" class="form-control" pattern="[0-9]{9,11}"
+						title="Số điện thoại gồm 9-11 chữ số"
 						value="${sessionScope.account.phone}">
 				</div>
 

@@ -52,6 +52,12 @@ public class CategoryController extends HttpServlet {
 			String categoryname = req.getParameter("categoryname");
 			int status = Integer.parseInt(req.getParameter("status"));
 
+			if (categoryname == null || categoryname.trim().isEmpty()) {
+				req.setAttribute("error", "Vui lòng nhập tên danh mục!");
+				req.getRequestDispatcher("/views/admin/category-add.jsp").forward(req, resp);
+				return;
+			}
+
 			Category category = new Category();
 			category.setCategoryname(categoryname);
 			category.setStatus(status);
@@ -78,6 +84,13 @@ public class CategoryController extends HttpServlet {
 			int status = Integer.parseInt(req.getParameter("status"));
 
 			Category category = categoryDao.findById(categoryId);
+
+			if (categoryname == null || categoryname.trim().isEmpty()) {
+				req.setAttribute("error", "Vui lòng nhập tên danh mục!");
+				req.setAttribute("cate", category);
+				req.getRequestDispatcher("/views/admin/category-edit.jsp").forward(req, resp);
+				return;
+			}
 			category.setCategoryname(categoryname);
 			category.setStatus(status);
 

@@ -91,8 +91,7 @@
 
 	<!-- FOOTER -->
 	<footer class="bg-light text-center py-3 mt-5 border-top">
-		<p class="mb-0 text-muted">&copy; 2026 Bài Tập Lập Trình Web - JPA
-			& Servlet</p>
+		<p class="mb-0 text-muted">&copy; 2026 Bài Tập Lập Trình Web - JPA và Servlet</p>
 	</footer>
 
 	<!-- Bootstrap 5 JS Bundle -->

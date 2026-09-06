@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
 <h2>Thêm danh mục mới</h2>
+
+<c:if test="${not empty error}">
+	<div class="alert alert-danger">${error}</div>
+</c:if>
 
 <form action="${pageContext.request.contextPath}/admin/category/insert"
 	method="post" enctype="multipart/form-data">

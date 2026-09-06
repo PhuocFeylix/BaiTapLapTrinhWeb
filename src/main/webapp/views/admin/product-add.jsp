@@ -4,11 +4,15 @@
 
 <h2>Thêm sản phẩm mới</h2>
 
+<c:if test="${not empty error}">
+	<div class="alert alert-danger">${error}</div>
+</c:if>
+
 <form action="${pageContext.request.contextPath}/admin/product/insert"
 	method="post" enctype="multipart/form-data">
 	<div class="mb-3">
 		<label class="form-label">Tên sản phẩm:</label> <input type="text"
-			name="productName" class="form-control" required />
+			name="productName" class="form-control" value="${oldProductName}" required />
 	</div>
 	<div class="mb-3">
 		<label class="form-label">Danh mục:</label> <select name="categoryId"
@@ -20,11 +24,11 @@
 	</div>
 	<div class="mb-3">
 		<label class="form-label">Giá bán:</label> <input type="number"
-			step="0.01" name="price" class="form-control" required />
+			step="0.01" min="0" name="price" class="form-control" value="${oldPrice}" required />
 	</div>
 	<div class="mb-3">
 		<label class="form-label">Số lượng:</label> <input type="number"
-			name="quantity" class="form-control" required />
+			min="0" name="quantity" class="form-control" value="${oldQuantity}" required />
 	</div>
 	<div class="mb-3">
 		<label class="form-label">Mô tả:</label>

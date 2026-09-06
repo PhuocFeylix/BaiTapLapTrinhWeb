@@ -30,32 +30,49 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String remember = req.getParameter("remember");
 
-        User user = userDao.checkLogin(username, password);
+        // ===== VALIDATION PHIA SERVER =====
+        if (username == null || username.trim().isEmpty() || password == null || password.isEmpty()) {
+            req.setAttribute("error", "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
+            req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
+            return;
+        }
 
-        if (user != null) {
-            // 1. Lưu vào Session
-            HttpSession session = req.getSession();
-            session.setAttribute("account", user);
+        User user = userDao.checkLogin(username.trim(), password);
 
-            // 2. Xử lý Cookie
-            if ("on".equals(remember)) {
-                Cookie cUser = new Cookie("username", username);
-                cUser.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
-                resp.addCookie(cUser);
-            } else {
-                Cookie cUser = new Cookie("username", "");
-                cUser.setMaxAge(0);
-                resp.addCookie(cUser);
-            }
-
-            resp.sendRedirect(req.getContextPath() + "/user/profile");
-        } else {
+        if (user == null) {
             req.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không chính xác!");
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
+            return;
         }
+
+        // Tai khoan chua kich hoat OTP qua email
+        if (user.getActive() == 0) {
+            req.setAttribute("error", "Tài khoản chưa được kích hoạt. Vui lòng kiểm tra email để nhập mã OTP kích hoạt.");
+            req.setAttribute("pendingUsername", user.getUsername());
+            req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
+            return;
+        }
+
+        // 1. Lưu vào Session
+        HttpSession session = req.getSession();
+        session.setAttribute("account", user);
+
+        // 2. Xử lý Cookie
+        if ("on".equals(remember)) {
+            Cookie cUser = new Cookie("username", username);
+            cUser.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+            resp.addCookie(cUser);
+        } else {
+            Cookie cUser = new Cookie("username", "");
+            cUser.setMaxAge(0);
+            resp.addCookie(cUser);
+        }
+
+        resp.sendRedirect(req.getContextPath() + "/user/profile");
     }
 }

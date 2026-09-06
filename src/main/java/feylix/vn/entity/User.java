@@ -33,7 +33,53 @@ public class User implements Serializable {
 	private String phone;
 	private String images;
 
+	@Column(unique = true)
+	private String email;
+
+	@Column(name = "otp_code")
+	private String otpCode;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "otp_expiry")
+	private java.util.Date otpExpiry;
+
+	// 0 = chua kich hoat (cho xac thuc OTP), 1 = da kich hoat
+	@Column(name = "active")
+	private int active;
+
 	public User() {
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getOtpCode() {
+		return otpCode;
+	}
+
+	public void setOtpCode(String otpCode) {
+		this.otpCode = otpCode;
+	}
+
+	public java.util.Date getOtpExpiry() {
+		return otpExpiry;
+	}
+
+	public void setOtpExpiry(java.util.Date otpExpiry) {
+		this.otpExpiry = otpExpiry;
+	}
+
+	public int getActive() {
+		return active;
+	}
+
+	public void setActive(int active) {
+		this.active = active;
 	}
 
 	// Getters và Setters
